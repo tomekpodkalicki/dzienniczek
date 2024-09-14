@@ -9,8 +9,8 @@ data class Transaction(
     var uid: Int = 0,
     val date: Long,
     val price: Float,
-    val type: TransactionType,
-    val desc: String,
+   val desc: String,
+   val type: TransactionType,
     val category: TransactionCategory
 
 

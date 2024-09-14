@@ -1,17 +1,22 @@
 package com.example.dziennikaktywnosci123
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.example.dziennikaktywnosci123.data.models.Transaction
+import com.example.dziennikaktywnosci123.data.models.TransactionCategory
+import com.example.dziennikaktywnosci123.data.models.TransactionType
 import com.example.dziennikaktywnosci123.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private val mainVm by viewModels<MainViewModel>()
     private lateinit var binding: ActivityMainBinding
-    private lateinit var navHostFragment: NavHostFragment
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +28,12 @@ class MainActivity : AppCompatActivity() {
             val navController = navHostFragment.navController
             NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
 
+        mainVm.insertTransaction(createTransaction())
+
+
+
     }
+
+    private fun createTransaction() = Transaction(0, 1L, 69f,"XD", TransactionType.INCOME, TransactionCategory.LODZIK)
 
 }
