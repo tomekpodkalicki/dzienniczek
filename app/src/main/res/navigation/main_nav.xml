@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/addTransactionFragment">
+
+    <fragment
+        android:id="@+id/addTransactionFragment"
+        android:name="com.example.dziennikaktywnosci123.ui.add_fragment.AddTransactionFragment"
+        android:label="fragment_add_transaction"
+        tools:layout="@layout/fragment_add_transaction" />
+    <fragment
+        android:id="@+id/editTransactionFragment"
+        android:name="com.example.dziennikaktywnosci123.ui.edit_fragment.EditTransactionFragment"
+        android:label="fragment_edit_transaction"
+        tools:layout="@layout/fragment_edit_transaction" />
+    <fragment
+        android:id="@+id/incomeFragment"
+        android:name="com.example.dziennikaktywnosci123.ui.income_fragment.IncomeFragment"
+        android:label="fragment_income"
+        tools:layout="@layout/fragment_income" />
+    <fragment
+        android:id="@+id/outcomeFragment"
+        android:name="com.example.dziennikaktywnosci123.ui.outcome_fragment.OutcomeFragment"
+        android:label="fragment_outcome"
+        tools:layout="@layout/fragment_outcome" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="com.example.dziennikaktywnosci123.ui.transaction_fragment.TransactionsFragment"
+        android:label="fragment_transactions"
+        tools:layout="@layout/fragment_transactions" />
+</navigation>
