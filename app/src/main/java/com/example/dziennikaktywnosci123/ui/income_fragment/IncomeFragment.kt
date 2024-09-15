@@ -1,35 +1,40 @@
 package com.example.dziennikaktywnosci123.ui.income_fragment
 
+import android.annotation.SuppressLint
 import android.graphics.Color
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.dziennikaktywnosci123.MainViewModel
-import com.example.dziennikaktywnosci123.R
 import com.example.dziennikaktywnosci123.databinding.FragmentIncomeBinding
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 class IncomeFragment : Fragment() {
 
     private val viewModel by viewModels<IncomeViewModel>()
-        private val mainVm by activityViewModels<MainViewModel>()
+    private val mainVm by activityViewModels<MainViewModel>()
     private var _binding: FragmentIncomeBinding? = null
     private val binding get() = _binding!!
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentIncomeBinding.inflate(layoutInflater, container, false)
-            return binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +51,20 @@ class IncomeFragment : Fragment() {
             description.isEnabled = false
             setTransparentCircleAlpha(50)
 
+            setOnChartValueSelectedListener(object: OnChartValueSelectedListener {
+                override fun onValueSelected(e: Entry?, h: Highlight?) {
+                    val value = e?.y?.toString() ?: "0"
+                    Log.d("IncomeFragment", "Selected value: $value")
+                    binding.incomePieChart.centerText = "$value PLN"
+                    binding.incomePieChart.invalidate()
+                }
+
+                override fun onNothingSelected() {
+                    binding.incomePieChart.centerText = "Przychody"
+                    binding.incomePieChart.invalidate()
+                }
+            })
+
         }
 
         mainVm.getSumOfIncomeGroupByCategory().observe(viewLifecycleOwner) { transactions ->
@@ -56,7 +75,7 @@ class IncomeFragment : Fragment() {
                 entries.add(pieEntry)
             }
 
-                    val pieDataSet = PieDataSet(entries, "")
+            val pieDataSet = PieDataSet(entries, "")
             val colors = listOf(
                 Color.parseColor("#94fee1"),
                 Color.parseColor("#fe9ca9"),

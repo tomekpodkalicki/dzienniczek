@@ -45,6 +45,7 @@ android {
 dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.tools.core)
     ksp(libs.androidx.room.compiler.v250) // Assuming this is Room 2.5.0
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment)

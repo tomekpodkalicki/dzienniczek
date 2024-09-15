@@ -1,5 +1,5 @@
 package com.example.dziennikaktywnosci123.data.models
 
 enum class TransactionCategory {
-    FOOD, TRANSPORT,HOUSEHOLD,OTHERS, LODZIK
+    JEDZENIE, MIESZKANIE, RACHUNKI, INTERNET, CHEMIA, APLIKACJE, KOTECZKI, ALKO
 }

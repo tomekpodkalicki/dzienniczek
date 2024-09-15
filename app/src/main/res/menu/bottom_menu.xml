@@ -3,14 +3,17 @@
 
 
     <item
+        android:icon="@drawable/cart_tick"
         android:title="Transakcje"
         android:id="@id/transactionsFragment"/>
 
     <item
+        android:icon="@drawable/wallet_add"
         android:title="Przychody"
         android:id="@id/incomeFragment"/>
 
     <item
+        android:icon="@drawable/wallet__remove"
         android:title="Wydatki"
         android:id="@id/outcomeFragment"/>
 
