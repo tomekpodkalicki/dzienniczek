@@ -1,18 +1,18 @@
 package com.example.dziennikaktywnosci123.ui.transaction_fragment
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dziennikaktywnosci123.MainViewModel
-import com.example.dziennikaktywnosci123.R
 import com.example.dziennikaktywnosci123.databinding.FragmentTransactionsBinding
 import com.example.dziennikaktywnosci123.ui.adapters.TransactionsAdapter
+
 
 class TransactionsFragment : Fragment() {
 
@@ -24,25 +24,37 @@ class TransactionsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentTransactionsBinding.inflate(
-            layoutInflater,
-            container,
-            false
-        )
+    ): View? {
+        _binding = FragmentTransactionsBinding.inflate(inflater, container, false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerView.adapter = TransactionsAdapter(emptyList()) { transaction, position ->
+            Log.d("TEST", "Trans: ${transaction.toString()}")
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        mainVm.getAllTransactions().observe(viewLifecycleOwner) { transactions ->
-            binding.recyclerView.adapter =
-                TransactionsAdapter(transactions) { transaction, position ->
-                    Log.d("TEST", "Trans: ${transaction.toString()}")
 
-                }
+        // Observe transactions
+        mainVm.getAllTransactions().observe(viewLifecycleOwner) { transactions ->
+            Log.d("TEST", "Transactions received: ${transactions.size}")
+            if (transactions.isNotEmpty()) {
+                binding.recyclerView.adapter =
+                    TransactionsAdapter(transactions) { transaction, position ->
+                        Log.d("TEST", "Trans: ${transaction.toString()}")
+                    }
+            } else {
+                Log.d("TEST", "No transactions found.")
+            }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

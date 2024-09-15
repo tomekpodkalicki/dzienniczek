@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.example.dziennikaktywnosci123.MainActivity
 import com.example.dziennikaktywnosci123.MainViewModel
-import com.example.dziennikaktywnosci123.R
 import com.example.dziennikaktywnosci123.data.models.Transaction
 import com.example.dziennikaktywnosci123.data.models.TransactionCategory
 import com.example.dziennikaktywnosci123.data.models.TransactionType
@@ -23,11 +24,18 @@ class AddTransactionFragment : Fragment() {
     private val mainVm by activityViewModels<MainViewModel>()
     private var _binding: FragmentAddTransactionBinding? = null
     private val binding get() = _binding!!
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            (requireActivity() as MainActivity).setBottomNavVisibility(true)
+            isEnabled = false
+            requireActivity().onBackPressed()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddTransactionBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -35,10 +43,12 @@ class AddTransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        handleOnBackPressed()
+
         val adapter = ArrayAdapter(requireContext(),
             androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
             TransactionCategory.values().map { enum -> enum.name }
-            )
+        )
 
         binding.categorySpinner.adapter = adapter
 
@@ -52,6 +62,10 @@ class AddTransactionFragment : Fragment() {
         }
     }
 
+    private fun handleOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+    }
+
     private fun showDatePicker() {
         val newDatePick = TransactionDatePicker { day, month, year ->
             binding.dayTv.text = day.toString()
@@ -59,38 +73,30 @@ class AddTransactionFragment : Fragment() {
             binding.yearTv.text = year.toString()
 
             val date = Calendar.getInstance()
-            date.set(day, month, year)
+            date.set(year, month - 1, day)  // Correct month handling
             viewModel.date = date.timeInMillis
         }
         newDatePick.show(parentFragmentManager, "DatePicker")
     }
 
     private fun createTransaction(): Transaction {
-
-        val type = when
-                (binding.typeRg.checkedRadioButtonId) {
-            binding.incomeRb.id -> TransactionType.INCOME
-            else -> TransactionType.OUTCOME
+        val type = when (binding.typeRg.checkedRadioButtonId) {
+            binding.incomeRb.id -> TransactionType.PRZYCHOD
+            else -> TransactionType.WYDATEK
         }
-        val category = when(binding.categorySpinner.selectedItem.toString()){
+        val category = when (binding.categorySpinner.selectedItem.toString()) {
             "JEDZENIE" -> TransactionCategory.JEDZENIE
             "MIESZKANIE" -> TransactionCategory.MIESZKANIE
-             "RACHUNKI" -> TransactionCategory.RACHUNKI
+            "RACHUNKI" -> TransactionCategory.RACHUNKI
             "INTERNET" -> TransactionCategory.INTERNET
-            "CHEMIA" -> TransactionCategory.CHEMIA
-            "APLIKACJE" -> TransactionCategory.APLIKACJE
-            "KOTECZKI" -> TransactionCategory.KOTECZKI
-            "ALKO" -> TransactionCategory.ALKO
-            else -> TransactionCategory.JEDZENIE
+            else -> TransactionCategory.INNE
         }
 
         val amount = binding.amountEt.text.toString()
-        val desc = binding.descEt.toString()
+        val desc = binding.descEt.text.toString()
 
-        return Transaction(0, viewModel.date,amount.toFloat(), desc, type, category)
+        return Transaction(0, viewModel.date, amount.toFloat(), desc, type, category)
     }
-
-    
 
     override fun onDestroy() {
         super.onDestroy()

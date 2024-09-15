@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "transactions_table")
 data class Transaction(
-   @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
     var uid: Int = 0,
     val date: Long,
     val price: Float,
-   val desc: String,
-   val type: TransactionType,
+    val desc: String,
+    val type: TransactionType,
     val category: TransactionCategory
 
 

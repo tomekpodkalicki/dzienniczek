@@ -22,18 +22,18 @@ interface TransactionsDao {
     @Delete
     suspend fun deleteTransaction(transactions: List<Transaction>)
 
-    @Query("SELECT * FROM transactions_table ORDER BY date DESC")
+    @Query("SELECT * FROM transactions_table ORDER BY DATE DESC")
     fun getAllTransactions(): Flow<List<Transaction>>
 
-    @Query("SELECT * FROM transactions_table WHERE type = 'INCOME'")
+    @Query("SELECT * FROM transactions_table WHERE type = 'PRZYCHOD'")
     fun getAllIncomes(): Flow<List<Transaction>>
 
-    @Query("SELECT * FROM transactions_table WHERE type = 'OUTCOME'")
+    @Query("SELECT * FROM transactions_table WHERE type = 'WYDATEK'")
     fun getAllOutcomes(): Flow<List<Transaction>>
 
-    @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'INCOME' GROUP BY category")
+    @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'PRZYCHOD' GROUP BY category")
     fun getSumOfIncomeGroupByCategory(): Flow<List<CategoryTotal>>
 
-    @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'OUTCOME' GROUP BY category")
+    @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'WYDATEK' GROUP BY category")
     fun getSumOfOutcomeGroupByCategory(): Flow<List<CategoryTotal>>
 }

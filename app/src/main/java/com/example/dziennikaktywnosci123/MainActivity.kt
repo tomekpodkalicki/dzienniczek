@@ -6,11 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.dziennikaktywnosci123.data.models.Transaction
-import com.example.dziennikaktywnosci123.data.models.TransactionCategory
-import com.example.dziennikaktywnosci123.data.models.TransactionType
 import com.example.dziennikaktywnosci123.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +27,12 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
 
-        mainVm.insertTransaction(createTransaction())
+        binding.addTransactionFb.setOnClickListener {
+            setBottomNavVisibility(false)
+            navController.navigate(R.id.addTransactionFragment)
+        }
+
+        //mainVm.insertTransaction(createTransaction())
 
 
     }
@@ -44,11 +45,7 @@ class MainActivity : AppCompatActivity() {
             true -> View.VISIBLE
             else -> View.GONE
         }
-        binding.bottomNavigationView.visibility = isVisible
-        binding.bottomNavigationView.postInvalidate()
+        binding.cardView.visibility = isVisible
+        binding.addTransactionFb.visibility = isVisible
     }
-
-    private fun createTransaction() =
-        Transaction(0, 1L, 69f, "XD", TransactionType.INCOME, TransactionCategory.CHEMIA)
-
 }

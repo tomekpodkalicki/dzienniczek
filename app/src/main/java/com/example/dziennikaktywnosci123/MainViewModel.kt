@@ -33,6 +33,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun getAllIncomes() = repo.getAllIncomes().asLiveData(viewModelScope.coroutineContext)
     fun getAllOutcomes() = repo.getAllOutcomes().asLiveData(viewModelScope.coroutineContext)
     fun getSumOfIncomeGroupByCategory() = repo.getSumOfIncomeGroupByCategory().asLiveData(viewModelScope.coroutineContext)
+    fun getSumOfOutcomeGroupByCategory() = repo.getSumOfOutcomeGroupByCategory().asLiveData(viewModelScope.coroutineContext)
 
 
 
