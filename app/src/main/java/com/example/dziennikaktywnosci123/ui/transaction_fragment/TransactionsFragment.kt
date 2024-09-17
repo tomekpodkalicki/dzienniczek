@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.dziennikaktywnosci123.MainActivity
 import com.example.dziennikaktywnosci123.MainViewModel
+import com.example.dziennikaktywnosci123.R
 import com.example.dziennikaktywnosci123.databinding.FragmentTransactionsBinding
 import com.example.dziennikaktywnosci123.ui.adapters.TransactionsAdapter
 
@@ -45,7 +48,9 @@ class TransactionsFragment : Fragment() {
             if (transactions.isNotEmpty()) {
                 binding.recyclerView.adapter =
                     TransactionsAdapter(transactions) { transaction, position ->
-                        Log.d("TEST", "Trans: ${transaction.toString()}")
+                        mainVm.selectTransaction(transaction)
+                        (requireActivity() as MainActivity).setBottomNavVisibility(false)
+                        findNavController().navigate(R.id.editTransactionFragment)
                     }
             } else {
                 Log.d("TEST", "No transactions found.")

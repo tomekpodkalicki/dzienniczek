@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.dziennikaktywnosci123.MainActivity
 import com.example.dziennikaktywnosci123.MainViewModel
 import com.example.dziennikaktywnosci123.data.models.Transaction
@@ -28,7 +29,7 @@ class AddTransactionFragment : Fragment() {
         override fun handleOnBackPressed() {
             (requireActivity() as MainActivity).setBottomNavVisibility(true)
             isEnabled = false
-            requireActivity().onBackPressed()
+            findNavController().popBackStack()
         }
     }
 
@@ -58,7 +59,7 @@ class AddTransactionFragment : Fragment() {
         binding.saveBtn.setOnClickListener {
             val trans = createTransaction()
             mainVm.insertTransaction(trans)
-            requireActivity().onBackPressed()
+            findNavController().popBackStack()
         }
     }
 
@@ -73,7 +74,7 @@ class AddTransactionFragment : Fragment() {
             binding.yearTv.text = year.toString()
 
             val date = Calendar.getInstance()
-            date.set(year, month - 1, day)  // Correct month handling
+            date.set(year, month , day)
             viewModel.date = date.timeInMillis
         }
         newDatePick.show(parentFragmentManager, "DatePicker")

@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
     var isBottomNavVisibile = true
+    private var selectedTransaction: Transaction? = null
     private val repo = TransactionsRepository(app)
 
     fun insertTransaction(transaction: Transaction) =
@@ -35,6 +36,12 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     fun getSumOfIncomeGroupByCategory() = repo.getSumOfIncomeGroupByCategory().asLiveData(viewModelScope.coroutineContext)
     fun getSumOfOutcomeGroupByCategory() = repo.getSumOfOutcomeGroupByCategory().asLiveData(viewModelScope.coroutineContext)
 
+    fun selectTransaction(transaction: Transaction) {
+        selectedTransaction = transaction
+    }
 
-
+    fun unSelectTransaction() {
+        selectedTransaction = null
+    }
+    fun getSelectedTransaction() = selectedTransaction
 }
