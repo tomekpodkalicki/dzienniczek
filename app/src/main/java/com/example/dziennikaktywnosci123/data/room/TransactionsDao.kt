@@ -25,13 +25,13 @@ interface TransactionsDao {
     @Query("SELECT * FROM transactions_table ORDER BY DATE DESC")
     fun getAllTransactions(): Flow<List<Transaction>>
 
-    @Query("SELECT * FROM transactions_table WHERE type = 'PRZYCHOD'")
+    @Query("SELECT * FROM transactions_table WHERE type = 'PRZYCHÓD'")
     fun getAllIncomes(): Flow<List<Transaction>>
 
     @Query("SELECT * FROM transactions_table WHERE type = 'WYDATEK'")
     fun getAllOutcomes(): Flow<List<Transaction>>
 
-    @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'PRZYCHOD' GROUP BY category")
+    @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'PRZYCHÓD' GROUP BY category")
     fun getSumOfIncomeGroupByCategory(): Flow<List<CategoryTotal>>
 
     @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'WYDATEK' GROUP BY category")

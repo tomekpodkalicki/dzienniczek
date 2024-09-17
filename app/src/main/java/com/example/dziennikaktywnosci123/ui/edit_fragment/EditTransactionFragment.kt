@@ -1,15 +1,16 @@
 package com.example.dziennikaktywnosci123.ui.edit_fragment
 
 import android.annotation.SuppressLint
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dziennikaktywnosci123.MainActivity
 import com.example.dziennikaktywnosci123.MainViewModel
@@ -35,15 +36,13 @@ class EditTransactionFragment : Fragment() {
         }
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEditTransactionBinding.inflate(layoutInflater, container, false)
-            return binding.root
+        return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,10 +57,8 @@ class EditTransactionFragment : Fragment() {
     }
 
     private fun setupOnClicks() {
-
-        binding.calendarIv.setOnClickListener{
+        binding.calendarIv.setOnClickListener {
             showDatePicker()
-
         }
 
         binding.deleteBtn.setOnClickListener {
@@ -70,11 +67,11 @@ class EditTransactionFragment : Fragment() {
                 mainVm.unSelectTransaction()
             }
             requireActivity().onBackPressedDispatcher.onBackPressed()
+            Toast.makeText(requireContext(),"Pomyślnie usunieto transakcje!", Toast.LENGTH_SHORT).show()
         }
 
         binding.saveBtn.setOnClickListener {
             updateTransaction()
-
         }
     }
 
@@ -83,18 +80,19 @@ class EditTransactionFragment : Fragment() {
         if (updateTrans != null) {
             mainVm.updateTransaction(updateTrans)
             requireActivity().onBackPressedDispatcher.onBackPressed()
+            Toast.makeText(requireContext(), "Pomyślnie zaktualizowano transakcje", Toast.LENGTH_SHORT).show()
         } else {
+            Toast.makeText(requireContext(), "Błąd aktualizacji transakcji", Toast.LENGTH_SHORT).show()
         }
     }
 
-
     private fun showDatePicker() {
         val newDatePick = TransactionDatePicker { day, month, year ->
-            val dayPlaceholder = if(day < 10) "0$day" else "$day"
-            binding.dayTv.text = dayPlaceholder // visibility user
+            val dayPlaceholder = if (day < 10) "0$day" else "$day"
+            binding.dayTv.text = dayPlaceholder
 
-            val monthPlaceholder = if(month + 1 < 10) "0${ month + 1 } " else "${ month + 1}"
-            binding.monthTv.text = monthPlaceholder // add +1 to visibility user
+            val monthPlaceholder = if (month + 1 < 10) "0${month + 1}" else "${month + 1}"
+            binding.monthTv.text = monthPlaceholder
             binding.yearTv.text = year.toString()
 
             val date = Calendar.getInstance()
@@ -107,7 +105,6 @@ class EditTransactionFragment : Fragment() {
     private fun createTransaction(): Transaction? {
         val selectedTransaction = mainVm.getSelectedTransaction()
         if (selectedTransaction == null) {
-            // Handle the null case, maybe show an error message or log it
             return null
         }
 
@@ -123,10 +120,18 @@ class EditTransactionFragment : Fragment() {
             else -> TransactionCategory.INNE
         }
 
-        val amount = binding.amountEt.text.toString()
+        // Handle amount safely
+        val amountString = binding.amountEt.text.toString()
+        val amount = amountString.toFloatOrNull()
+        if (amount == null) {
+            binding.amountEt.error = "Podaj liczbę"
+            Toast.makeText(requireContext(), "Podaj liczbę", Toast.LENGTH_SHORT).show()
+            return null
+        }
+
         val desc = binding.descEt.text.toString()
 
-        return Transaction(mainVm.getSelectedTransaction()!!.uid, viewModel.date, amount.toFloat(), desc, type, category)
+        return Transaction(selectedTransaction.uid, viewModel.date, amount, desc, type, category)
     }
 
     private fun setTransactionData(transaction: Transaction) {
@@ -139,14 +144,13 @@ class EditTransactionFragment : Fragment() {
 
     private fun setCurrentDescription(desc: String) {
         binding.descEt.setText(desc)
-
     }
 
     @SuppressLint("SimpleDateFormat")
     private fun setCurrentDate(date: Long) {
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         val datePlaceHolder = sdf.format(date)
-        val list = datePlaceHolder.split("/") // Correct delimiter
+        val list = datePlaceHolder.split("/")
 
         if (list.size == 3) {
             binding.dayTv.text = list[0]
@@ -167,7 +171,7 @@ class EditTransactionFragment : Fragment() {
     }
 
     private fun setCurrentType(type: TransactionType) {
-        val checkId = when ( type ) {
+        val checkId = when (type) {
             TransactionType.PRZYCHÓD -> binding.incomeRb.id
             TransactionType.WYDATEK -> binding.outcomeRb.id
         }
@@ -175,8 +179,7 @@ class EditTransactionFragment : Fragment() {
     }
 
     private fun setCurrentAmount(price: Float) {
-        binding.amountEt.setText(price.toString())
-
+        binding.amountEt.setText(price.toString()) // Display the current price in the EditText
     }
 
     override fun onDestroy() {
