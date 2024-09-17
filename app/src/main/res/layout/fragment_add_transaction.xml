@@ -1,28 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
+    android:padding="1dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.add_fragment.AddTransactionFragment">
 
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="102dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.026"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/backIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:src="@drawable/ic_arrow_bacl"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wróć"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="-4dp"
+            tools:layout_editor_absoluteY="11dp" />
+
+    </Toolbar>
+
     <TextView
-        android:background="@drawable/text_view_outline"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="33sp"
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/text_view_outline"
         android:text="Dodawanie transakcji"
+        android:textAlignment="center"
+        android:textSize="33sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <RadioGroup
         android:id="@+id/typeRg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="235dp"
+        android:layout_height="56dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
@@ -31,21 +63,26 @@
 
         <RadioButton
             android:id="@+id/incomeRb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Przychód" />
+            android:layout_width="112dp"
+            android:layout_height="match_parent"
+            android:minWidth="80dp"
+            android:minHeight="50dp"
+            android:text="Przychód"
+            />
 
         <RadioButton
+            android:minHeight="50dp"
+            android:minWidth="80dp"
             android:id="@+id/outcomeRb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="111dp"
+            android:layout_height="match_parent"
             android:text="Wydatek" />
     </RadioGroup>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="12dp"
         android:text="Wybierz kategorie"
         android:textSize="29sp"
@@ -54,42 +91,51 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatSpinner
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:id="@+id/categorySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_width="385dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="68dp"
         android:background="@drawable/text_view_outline"
+        android:overlapAnchor="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeRg"
-        app:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_editor_absoluteX="0dp" />
 
     <TextView
-        android:textStyle="bold"
-        android:textSize="29sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
         android:text="Ile"
+        android:textSize="29sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/amountEt"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:background="@drawable/text_view_outline"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:id="@+id/amountEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
+        android:layout_width="387dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="56dp"
+        android:background="@drawable/text_view_outline"
         android:hint="Wpisz kwote:"
-        app:layout_constraintTop_toBottomOf="@+id/categorySpinner"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categorySpinner" />
 
     <TextView
         android:id="@+id/dateTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="20dp"
         android:text="Data"
         android:textSize="29sp"
         android:textStyle="bold"
@@ -100,13 +146,15 @@
         android:id="@+id/calendarIv"
         android:layout_width="47dp"
         android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/calender"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toEndOf="@+id/dateTv" />
 
     <LinearLayout
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,6 +165,8 @@
 
 
         <TextView
+            android:gravity="center"
+            android:minHeight="50dp"
             android:id="@+id/dayTv"
             android:background="@drawable/text_view_outline"
             android:textAlignment="center"
@@ -126,6 +176,8 @@
             android:hint="Dzień" />
 
         <TextView
+            android:gravity="center"
+            android:minHeight="50dp"
             android:id="@+id/monthTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,6 +187,8 @@
             android:textAlignment="center" />
 
         <TextView
+            android:gravity="center"
+            android:minHeight="50dp"
             android:id="@+id/yearTv"
             android:background="@drawable/text_view_outline"
             android:textAlignment="center"
@@ -147,8 +201,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="20dp"
         android:text="Opis"
         android:textSize="29sp"
         android:textStyle="bold"
@@ -157,27 +211,39 @@
 
     <EditText
         android:id="@+id/descEt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_width="391dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/text_view_outline"
         android:hint="Kliknij by dodac opis"
         android:minHeight="155dp"
         android:textStyle="italic"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:backgroundTint="@android:color/holo_green_light"
         android:id="@+id/saveBtn"
-        android:background="@drawable/rounded_button"
-        android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="Zapisz"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:text="Zapisz transakcje"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/descEt"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="2dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="18dp">
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

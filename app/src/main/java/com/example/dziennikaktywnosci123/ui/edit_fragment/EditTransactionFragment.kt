@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.dziennikaktywnosci123.MainActivity
 import com.example.dziennikaktywnosci123.MainViewModel
-import com.example.dziennikaktywnosci123.R
 import com.example.dziennikaktywnosci123.data.models.Transaction
 import com.example.dziennikaktywnosci123.data.models.TransactionCategory
 import com.example.dziennikaktywnosci123.data.models.TransactionType
@@ -51,6 +50,11 @@ class EditTransactionFragment : Fragment() {
         handleOnBackPressed()
         setTransactionData(mainVm.getSelectedTransaction()!!)
         setupOnClicks()
+
+        binding.backIv.setOnClickListener {
+            (requireActivity() as MainActivity).setBottomNavVisibility(true)
+            findNavController().popBackStack()
+        }
     }
 
     private fun setupOnClicks() {
@@ -86,8 +90,11 @@ class EditTransactionFragment : Fragment() {
 
     private fun showDatePicker() {
         val newDatePick = TransactionDatePicker { day, month, year ->
-            binding.dayTv.text = day.toString()
-            binding.monthTv.text = month.toString()
+            val dayPlaceholder = if(day < 10) "0$day" else "$day"
+            binding.dayTv.text = dayPlaceholder // visibility user
+
+            val monthPlaceholder = if(month + 1 < 10) "0${ month + 1 } " else "${ month + 1}"
+            binding.monthTv.text = monthPlaceholder // add +1 to visibility user
             binding.yearTv.text = year.toString()
 
             val date = Calendar.getInstance()
@@ -105,7 +112,7 @@ class EditTransactionFragment : Fragment() {
         }
 
         val type = when (binding.typeRg.checkedRadioButtonId) {
-            binding.incomeRb.id -> TransactionType.PRZYCHOD
+            binding.incomeRb.id -> TransactionType.PRZYCHÓD
             else -> TransactionType.WYDATEK
         }
         val category = when (binding.categorySpinner.selectedItem.toString()) {
@@ -161,7 +168,7 @@ class EditTransactionFragment : Fragment() {
 
     private fun setCurrentType(type: TransactionType) {
         val checkId = when ( type ) {
-            TransactionType.PRZYCHOD -> binding.incomeRb.id
+            TransactionType.PRZYCHÓD -> binding.incomeRb.id
             TransactionType.WYDATEK -> binding.outcomeRb.id
         }
         binding.typeRg.check(checkId)

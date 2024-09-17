@@ -1,5 +1,6 @@
 package com.example.dziennikaktywnosci123.ui.add_fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,16 +62,26 @@ class AddTransactionFragment : Fragment() {
             mainVm.insertTransaction(trans)
             findNavController().popBackStack()
         }
+
+        binding.backIv.setOnClickListener {
+            (requireActivity() as MainActivity).setBottomNavVisibility(true)
+            findNavController().popBackStack()
+        }
     }
 
     private fun handleOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showDatePicker() {
         val newDatePick = TransactionDatePicker { day, month, year ->
-            binding.dayTv.text = day.toString()
-            binding.monthTv.text = month.toString()
+
+            val dayPlaceholder = if(day < 10) "0$day" else "$day"
+            binding.dayTv.text = dayPlaceholder // visibility user
+
+            val monthPlaceholder = if(month + 1 < 10) "0${ month + 1 } " else "${ month + 1}"
+            binding.monthTv.text = monthPlaceholder // add +1 to visibility user
             binding.yearTv.text = year.toString()
 
             val date = Calendar.getInstance()
@@ -82,7 +93,7 @@ class AddTransactionFragment : Fragment() {
 
     private fun createTransaction(): Transaction {
         val type = when (binding.typeRg.checkedRadioButtonId) {
-            binding.incomeRb.id -> TransactionType.PRZYCHOD
+            binding.incomeRb.id -> TransactionType.PRZYCHÓD
             else -> TransactionType.WYDATEK
         }
         val category = when (binding.categorySpinner.selectedItem.toString()) {

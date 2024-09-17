@@ -58,7 +58,7 @@ class TransactionsAdapter(
         val dateFormatted = sdf.format(date)
 
         val typeIcon = when (transaction.type) {
-            TransactionType.PRZYCHOD -> R.drawable.wallet_add
+            TransactionType.PRZYCHÓD -> R.drawable.wallet_add
             TransactionType.WYDATEK -> R.drawable.wallet__remove
         }
 

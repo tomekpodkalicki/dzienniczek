@@ -5,33 +5,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/imageView"
-        android:layout_width="64dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+    <androidx.cardview.widget.CardView
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="35dp"
+        android:id="@+id/cardViewImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:src="@mipmap/ic_myappiconn"
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+          />
+    </androidx.cardview.widget.CardView>
+
 
     <TextView
         android:id="@+id/categoryTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:text="Category"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/cardViewImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:textStyle="bold"
+        android:textColor="@color/black"
         android:id="@+id/priceTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="36dp"
-        android:text="price"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:text="Price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,17 +52,19 @@
         android:id="@+id/dateTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:text="date"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:text="Date"
+        app:layout_constraintStart_toEndOf="@+id/cardViewImage"
         app:layout_constraintTop_toBottomOf="@+id/categoryTv" />
 
     <TextView
         android:id="@+id/typeTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
-        android:text="type"
+        android:text="Type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/priceTv" />
 

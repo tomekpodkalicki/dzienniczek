@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
 
     <item
         android:icon="@drawable/cart_tick"
-        android:title="Transakcje"
+        android:title=""
         android:id="@id/transactionsFragment"/>
 
     <item
         android:icon="@drawable/wallet_add"
-        android:title="Przychody"
+        android:title=""
         android:id="@id/incomeFragment"/>
 
     <item
         android:icon="@drawable/wallet__remove"
-        android:title="Wydatki"
+        android:title=""
         android:id="@id/outcomeFragment"/>
 
 </menu>

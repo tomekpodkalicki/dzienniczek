@@ -11,7 +11,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Przychód"
+        android:text="Przychody"
         android:textColor="@color/black"
         android:textSize="40sp"
         android:textStyle="bold"
@@ -21,11 +21,11 @@
     <com.github.mikephil.charting.charts.PieChart
 
         android:id="@+id/incomePieChart"
-        android:layout_width="318dp"
-        android:layout_height="325dp"
-        android:layout_marginTop="244dp"
+        android:layout_width="382dp"
+        android:layout_height="540dp"
+        android:layout_marginTop="96dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
