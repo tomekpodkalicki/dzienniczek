@@ -131,8 +131,9 @@ class AddTransactionFragment : Fragment() {
             return null
         }
         val desc = binding.descEt.text.toString()
+        val userId = mainVm.getLoggedInUserId() ?: 0
 
-        return Transaction(0, viewModel.date, amount.toFloat(), desc, type, category)
+        return Transaction(0, viewModel.date, amount.toFloat(), desc, type, category, userId)
     }
 
     override fun onDestroy() {

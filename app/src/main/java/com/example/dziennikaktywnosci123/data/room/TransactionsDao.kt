@@ -36,4 +36,7 @@ interface TransactionsDao {
 
     @Query("SELECT category, SUM(price) as total FROM transactions_table WHERE type = 'WYDATEK' GROUP BY category")
     fun getSumOfOutcomeGroupByCategory(): Flow<List<CategoryTotal>>
+
+    @Query("SELECT * FROM transactions_table WHERE userId = :userId")
+    suspend fun getTransactionsByUserId(userId: Int?): List<Transaction>
 }

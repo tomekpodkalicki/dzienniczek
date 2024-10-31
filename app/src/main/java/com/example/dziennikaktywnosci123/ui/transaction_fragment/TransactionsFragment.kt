@@ -18,8 +18,6 @@ import com.example.dziennikaktywnosci123.ui.adapters.TransactionsAdapter
 
 
 class TransactionsFragment : Fragment() {
-
-    private val viewModel by viewModels<TransactionsViewModel>()
     private val mainVm by activityViewModels<MainViewModel>()
     private var _binding: FragmentTransactionsBinding? = null
     private val binding get() = _binding!!

@@ -19,6 +19,10 @@ class TransactionsRepository(context: Context) {
         transactionsDao.deleteTransaction(transactions)
     }
 
+    suspend fun getTransactionsByUserId(userId: Int?): List<Transaction> {
+        return transactionsDao.getTransactionsByUserId(userId)
+    }
+
     fun getAllTransactions() = transactionsDao.getAllTransactions()
     fun getAllIncomes() = transactionsDao.getAllIncomes()
     fun getAllOutcomes() = transactionsDao.getAllOutcomes()

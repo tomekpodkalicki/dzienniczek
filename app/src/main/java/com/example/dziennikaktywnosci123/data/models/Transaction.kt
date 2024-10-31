@@ -11,7 +11,6 @@ data class Transaction(
     val price: Float,
     val desc: String,
     val type: TransactionType,
-    val category: TransactionCategory
-
-
+    val category: TransactionCategory,
+    val userId: Int
 )

@@ -1,10 +1,12 @@
 package com.example.dziennikaktywnosci123
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.dziennikaktywnosci123.databinding.ActivityMainBinding
@@ -22,21 +24,21 @@ class MainActivity : AppCompatActivity() {
 
         setBottomNavVisibility(mainVm.isBottomNavVisibile)
 
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(binding.fragmentContainerView.id) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
+
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController)
 
+        binding.wyloguj.setOnClickListener {
+            navController.navigate(R.id.loginFragment)
+        }
         binding.addTransactionFb.setOnClickListener {
             setBottomNavVisibility(false)
             navController.navigate(R.id.addTransactionFragment)
         }
-
-        //mainVm.insertTransaction(createTransaction())
-
-
     }
-
     fun setBottomNavVisibility(bool: Boolean) {
 
         mainVm.isBottomNavVisibile = bool

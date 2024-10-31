@@ -130,8 +130,9 @@ class EditTransactionFragment : Fragment() {
         }
 
         val desc = binding.descEt.text.toString()
+        val userId = mainVm.getLoggedInUserId() ?: 0
 
-        return Transaction(selectedTransaction.uid, viewModel.date, amount, desc, type, category)
+        return Transaction(selectedTransaction.uid, viewModel.date, amount, desc, type, category, userId)
     }
 
     private fun setTransactionData(transaction: Transaction) {
