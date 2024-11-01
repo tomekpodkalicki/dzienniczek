@@ -33,6 +33,10 @@ private val vM by viewModels<MainViewModel>()
 
         setMenuVisibility(false)
 
+        binding.zaloguj.setOnClickListener{
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        }
+
         binding.registerButton.setOnClickListener{
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()

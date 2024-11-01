@@ -1,16 +1,17 @@
 package com.example.dziennikaktywnosci123.data
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import com.example.dziennikaktywnosci123.data.models.Transaction
 import com.example.dziennikaktywnosci123.data.room.DatabaseInstance
 
 class TransactionsRepository(context: Context) {
-
     private val transactionsDao = DatabaseInstance.getInstance(context).transactionsDao()
 
     suspend fun insertTransaction(transaction: Transaction) {
         transactionsDao.insertTransaction(transaction)
     }
+
     suspend fun updateTransaction(transaction: Transaction) {
         transactionsDao.updateTransaction(transaction)
     }
@@ -19,13 +20,13 @@ class TransactionsRepository(context: Context) {
         transactionsDao.deleteTransaction(transactions)
     }
 
-    suspend fun getTransactionsByUserId(userId: Int?): List<Transaction> {
-        return transactionsDao.getTransactionsByUserId(userId)
-    }
-
     fun getAllTransactions() = transactionsDao.getAllTransactions()
     fun getAllIncomes() = transactionsDao.getAllIncomes()
     fun getAllOutcomes() = transactionsDao.getAllOutcomes()
     fun getSumOfIncomeGroupByCategory() = transactionsDao.getSumOfIncomeGroupByCategory()
     fun getSumOfOutcomeGroupByCategory() = transactionsDao.getSumOfOutcomeGroupByCategory()
+
+    fun getTransactionsByUserId(userId: Int): LiveData<List<Transaction>> {
+        return transactionsDao.getTransactionsForUser(userId)
+    }
 }

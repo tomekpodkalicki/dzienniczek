@@ -1,7 +1,6 @@
 package com.example.dziennikaktywnosci123.ui.adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class TransactionsAdapter(
-    private val transactions: List<Transaction>,
+    private var transactions: MutableList<Transaction>,
     private val onClick: (Transaction, Int) -> Unit
 ) : RecyclerView.Adapter<TransactionsAdapter.TransactionViewHolder>() {
 
@@ -39,36 +38,36 @@ class TransactionsAdapter(
     }
 
     override fun onBindViewHolder(holder: TransactionViewHolder, position: Int) {
-        // Bind data to the ViewHolder
         bindData(holder, position)
     }
 
-    override fun getItemCount(): Int {
-        return transactions.size
-    }
+    override fun getItemCount(): Int = transactions.size
 
     @SuppressLint("SimpleDateFormat")
     private fun bindData(holder: TransactionViewHolder, position: Int) {
         val transaction = transactions[position]
-
         val sdf = SimpleDateFormat("dd/MM/yyyy")
-
-        // Ensure the date is valid
         val date = if (transaction.date > 0) Date(transaction.date) else Date()
         val dateFormatted = sdf.format(date)
 
+        // Set the icon based on the transaction type
         val typeIcon = when (transaction.type) {
             TransactionType.PRZYCHÓD -> R.drawable.wallet_add
-            TransactionType.WYDATEK -> R.drawable.wallet__remove
+            TransactionType.WYDATEK -> R.drawable.wallet__remove // Fixing the drawable name
         }
 
+        // Bind the data to views
         holder.price.text = transaction.price.toString()
         holder.category.text = transaction.category.name
         holder.date.text = dateFormatted
         holder.type.text = transaction.type.name
         holder.imageView.setImageResource(typeIcon)
+    }
 
-        // Logging for debugging purposes
-        Log.d("TransactionsAdapter", "Binding data for transaction at position $position: $transaction")
+    // Update the list of transactions
+    fun submitList(newTransactions: List<Transaction>) {
+        transactions.clear()
+        transactions.addAll(newTransactions)
+        notifyDataSetChanged() // Consider using DiffUtil for better performance
     }
 }

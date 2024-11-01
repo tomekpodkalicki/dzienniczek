@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.dziennikaktywnosci123.MainActivity
 import com.example.dziennikaktywnosci123.MainViewModel
 import com.example.dziennikaktywnosci123.R
 import com.example.dziennikaktywnosci123.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
     private val viewModel: LoginViewModel by viewModels()
-    private val vM: MainViewModel by viewModels()
+    private val vM: MainViewModel by activityViewModels()
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
@@ -31,14 +33,17 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setMenuVisibility(false)
+        vM.isBottomNavVisibile = false
+        (activity as MainActivity).setBottomNavVisibility(false)
+
+        binding.przejscieLogin
+            .setOnClickListener {
+                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            }
         binding.loginButton.setOnClickListener {
             val username = binding.usernameEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
-            binding.przejscieLogin
-                .setOnClickListener {
-                    findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-                }
+
 
             vM.loginUser(username, password).observe(viewLifecycleOwner) { user ->
                 if(user != null) {
@@ -56,5 +61,7 @@ class LoginFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        vM.isBottomNavVisibile = true
+        (activity as MainActivity).setBottomNavVisibility(true)
     }
-}
+    }
